@@ -27,17 +27,43 @@ B站播放器已经禁止了对$.root的调用，这意味着不再能注入字�
 * Scene3D（用来做3D系MAD可能用得上） 未实现
 * Bitmap与Sound 部分实现
 * 自适应、对齐与相对坐标（宽屏小窗口之类的） 未实现
+
 ###现在又实现了什么？
 * 外部库基本框架
 * 非脚本字节码Base64注入，暂时仅限于图片
 * 全键盘侦听的部分实现
 * 本地存储
+
 ###怎么测试这个库？
 嘛，很抱歉，不提供“一键测试”的方法。
 
-基本思路是先编译出来（需要Flex SDK，只提供Linux下的compile.sh，Windows下模仿着写就好），然后把http://static.hdslb.com/playerLibrary/libbQuery_2.swf定向（注意，不能是人工302，会受到跨域限制）到编译好的库。（如果不太走运的话，可能还要劫持https连接）
+基本思路是先编译出来（需要Flex SDK，只提供Linux下的compile.sh，Windows下模仿着写就好），然后把(http://static.hdslb.com/playerLibrary/libbQuery_2.swf)定向（注意，不能是人工302，会受到跨域限制）到编译好的库。（如果不太走运的话，可能还要劫持https连接）
 
 我的方法是用nginx搭建了一个“用于劫持指定URL”的反向代理（已经蠢到一定程度了），然后找弹幕大赛自己的参赛作品用代码预览功能调试（因此target文件夹里自带了另外两个官方外部库）。
+
+nginx的配置
+```
+#host文件内 127.0.0.1 static.hdslb.com
+#要保证80端口不被占用
+server{
+        resolver 8.8.8.8;
+        listen 80;
+        location / {
+                proxy_set_header Host static.hdslb.com;
+                proxy_pass http://www.bilibili.com/;
+        }
+        location ^~ /playerLibrary/{
+                proxy_pass http://localhost:8081/;
+        }
+}
+server {
+        listen 8081 default_server;
+        listen [::]:8081 default_server ipv6only=on;
+
+        root /home/gjz010/bquery/target;
+}
+
+```
 附测试代码：
 ```
 var jpeg="略去一大长串的Base64";
