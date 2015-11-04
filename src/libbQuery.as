@@ -29,6 +29,26 @@ package
          super();
          Security.allowDomain("*"); //报废掉跨域限制 这样就可以随心所欲地地网络连接（干坏事）了
       }
+//改造：从远端加载核心库
+//这样可以方便更新代码
+//过不了审核再说
+      private function loadRemoteLib(url:String,f:Function):void{
+            var loader:*=new Loader();
+            
+       var cremote:*=function(event:Event):void {
+            
+            var loader2:*=new Loader();
+            loader2.contentLoaderInfo.addEventListener(Event.COMPLETE,onComplete2);
+            loader2.loadBytes(loader.contentLoaderInfo.bytes);
+        }
+        var clocal:*=function(event:Event):void {
+            //this.addChild(loader2.content);
+            f(loader2.content);
+        }
+loader.contentLoaderInfo.addEventListener(Event.COMPLETE,cremote);
+            loader.load(new URLRequest(url));
+        
+       }
       private function initMap():void
         {
         map={};
