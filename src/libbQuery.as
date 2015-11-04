@@ -43,7 +43,7 @@ package
         }
         var clocal:*=function(event:Event):void {
             //this.addChild(loader2.content);
-            f(loader2.content);
+            f(event.currentTarget.loader.content);
         }
 loader.contentLoaderInfo.addEventListener(Event.COMPLETE,cremote);
             loader.load(new URLRequest(url));
