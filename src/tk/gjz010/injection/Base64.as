@@ -12,22 +12,24 @@ import flash.utils.ByteArray;
    public class Base64
    {
         public static function decode(s:String):ByteArray{
-            var o:Object=createDecoder();
+            var o:Object=_inner_createDecoder();
             o.decode(s);
             return o.toByteArray();
         }
 //由于一般来说脚本内不需要encode所以只提供了字节转base64的方法
         public static function encode(b:ByteArray):String{
-            var o:Object=createEncoder();
+            var o:Object=_inner_createEncoder();
             o.encodeBytes(b);
             return o.toString();
         }
 //顺便暴露出两个类供进阶使用
+//但是强烈不推荐使用这两个类
+//万一有一天biliplayer转到html5了呢（bQuery只应依赖于biliplayer）
 //注：返回类型如果不是Object会导致无影片（可能火星）
-        public static function createEncoder():Object{
+        public static function _inner_createEncoder():Object{
             return new Base64Encoder();
         }
-        public static function createDecoder():Object{
+        public static function _inner_createDecoder():Object{
             return new Base64Decoder();
         }
    }
