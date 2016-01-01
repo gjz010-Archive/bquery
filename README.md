@@ -37,7 +37,7 @@ B站播放器已经禁止了对$.root的调用，这意味着不再能注入字�
 ###怎么测试这个库？
 嘛，很抱歉，不提供“一键测试”的方法。
 
-基本思路是先编译出来（需要Flex SDK，只提供Linux下的compile.sh，Windows下模仿着写就好），然后把(http://static.hdslb.com/playerLibrary/libbQuery_2.swf)定向（注意，不能是人工302，会受到跨域限制）到编译好的库。（如果不太走运的话，可能还要劫持https连接）
+基本思路是先编译出来（需要Flex SDK，只提供Linux下的compile.sh，Windows下模仿着写就好），然后把<http://static.hdslb.com/playerLibrary/libbQuery_2.swf>定向（注意，不能是人工302，会受到跨域限制）到编译好的库。（如果不太走运的话，可能还要劫持https连接）
 
 我的方法是用nginx搭建了一个“用于劫持指定URL”的反向代理（已经蠢到一定程度了），然后找弹幕大赛自己的参赛作品用代码预览功能调试（因此target文件夹里自带了另外两个官方外部库）。
 
