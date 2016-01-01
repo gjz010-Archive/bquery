@@ -16,7 +16,7 @@ import libbQuery;
             var loader:Loader=new Loader();
             var onloaded:Function=function(e:Event):void{
                 libbQuery.btrace("image loaded!");
-                var target=e.currentTarget;
+                var target:*=e.currentTarget;
                 var loader:Loader = target.loader as Loader;
                 var b:Bitmap=loader.content as Bitmap
                 var bd:BitmapData=b.bitmapData;
