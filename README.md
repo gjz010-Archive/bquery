@@ -18,9 +18,11 @@ B站播放器已经禁止了对$.root的调用，这意味着不再能注入字�
 不同于（伟大的）Akari.biliscript，bQuery提供的功能更倾向于交互性高级弹幕（包括但不限于游戏）。
 * 全键盘侦听（替代keyTrigger,考虑到非角色扮演游戏的需要） 部分实现
 * 内置的Bitmap及Sound注入及外部读取方法（图像来说，附带JPEG解码器的封装来压缩体积；音频来说，弥补官方createSound的严重不足，允许从字节码加载Sound） 部分实现
+* 从Gist等外界剪贴板获取Base64或者素材文件（虽然我更喜欢直接注入进脚本里，防止外联断裂）
 * 对Box2D的封装（对Box2D的二次封装，针对物理类游戏） 未实现
 * 对Scene3D的封装（B站打MC指日可待） 未实现
 * 对WebSocket的封装（喂喂喂！） 未实现
+* bQuery自身的版本管理（保证兼容性与更新，既可以从Github获取新版，又可以使用fallback）
 
 对于艺术类高级弹幕来说，也会有一些有用的特性。
 * 加载子视频（或图像序列）（似乎可以用来绕过弹幕大赛的黑屏视频限制，但不建议这样做，因为不能保证性能，而且用非弹幕作品参加弹幕大赛有违公平） 未实现
@@ -28,6 +30,7 @@ B站播放器已经禁止了对$.root的调用，这意味着不再能注入字�
 * Bitmap与Sound 部分实现
 * 自适应、对齐与相对坐标（宽屏小窗口之类的） 未实现
 
+终极目标：做成一个半独立（或者通过重新实现biliscript完全独立）的游戏引擎（误）
 ###现在又实现了什么？
 * 外部库基本框架
 * 非脚本字节码Base64注入，暂时仅限于图片
@@ -76,7 +79,7 @@ var ls=$$.create("localstorage","gjz010");
 trace(ls.get("name"));
 var bar=$$.Base64.decode(jpeg);
 $$.extractimage(bar,function(bd){
-var bmp=createBitmap({
+var bmp=Bitmap.createBitmap({
 bitmapData:bd
 });
 });
