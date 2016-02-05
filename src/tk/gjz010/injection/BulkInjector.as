@@ -4,11 +4,8 @@ import flash.display.*;
 import flash.utils.ByteArray;
 import flash.events.Event;
 import libbQuery;
-//就真的没有人吐槽Bitmap就是一种资源浪费吗？
-//在这里设置一个利用Loader读取PNG与JPEG的辅助类
-//然而本身读取操作是异步的，所以，各自珍重
-//返回BitmapData就好了
-   public class ImageHelper
+//ss
+   public class BulkInjector
     {
 //读取PNG、JPEG、GIF（仅限第一帧）的方法
 //尽量避免直接接触Loader，所以complete只有一个参数：BitmapData
